@@ -28,15 +28,6 @@ uint32_t gaCntLoop[10] = {
 	0xAAAAAAAA, 
 };
 
-#define _COUNTER_STRINGIFY(COUNTER) #COUNTER
-#define _SECTION_ATTR_IMPL(SECTION, COUNTER) __attribute__((section(SECTION "." _COUNTER_STRINGIFY(COUNTER))))
-#define __NOINIT_ATTR _SECTION_ATTR_IMPL(".noinit", __COUNTER__)
-
-#define IRAM_ATTR _SECTION_ATTR_IMPL(".iram1", __COUNTER__)
-#define IFLASH_ATTR _SECTION_ATTR_IMPL(".iflash", __COUNTER__)
-
-
-#define IFLASH __attribute__((section(".iflash")))
 
 void IFLASH_ATTR flash_func(void);
 
@@ -60,14 +51,17 @@ void call_start_cpu(void)
 	printf("bss addr: %p\n", &gnBss);
 	printf("data addr: %p\n", gaCntLoop);
 	printf("stack Addr: %p\n", &nLocal);
-	printf("iF_Func Addr: %p\n", flash_func);
 
 	for(int i=0; i< 3; i++)
 	{
 		printf("Loop: %d, %X\n", i, gaCntLoop[i]);
 	}
 
+	Cache_Read_Enable(0,0,0);
+	uint32_t nVal = *(uint32_t*)flash_func;
+	printf("iF_Func Addr: %p\n", flash_func);
 //	flash_func();
+	printf("Read from flash: %X\n", nVal);
 
 	while(1);
 }

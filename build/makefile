@@ -286,7 +286,7 @@ bin: $(TARGET).elf
 	@echo To program >> esptool --chip esp8266 -p COM3 write_flash 0 $(BIN_FILE)
 	@echo BPS: 74880
 prog:
-	esptool --chip esp8266 -p COM3 write_flash 0 *.bin
+	esptool --chip esp8266 -p COM3 write_flash 0 $(TARGET).0x00000.bin
 
 # Display compiler version information.
 gccversion : 

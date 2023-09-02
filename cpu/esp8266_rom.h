@@ -41,10 +41,13 @@ int ets_io_vprintf(int (*putc)(int), const char* fmt, va_list ap);
 int_handler_t ets_isr_attach(uint32_t int_num, int_handler_t handler, void *arg);
 void ets_isr_mask(uint32_t ints);
 void ets_isr_unmask(uint32_t ints);
-void ets_intr_lock();
-void ets_intr_unlock();
+void ets_intr_lock(void);
+void ets_intr_unlock(void);
 
 void ets_delay_us(uint32_t us);
 void ets_timer_done(os_timer_t *ptimer);
 
 int md5_vector(uint32_t num_elem, const uint8_t *addr[], const uint32_t *len, uint8_t *mac);
+
+void Cache_Read_Disable(void);
+void Cache_Read_Enable(uint32_t a, uint32_t b, uint32_t c);
